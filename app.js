@@ -4,7 +4,7 @@ const newTodo = document.querySelector('#new-todo-form');
 const todoList = document.querySelector('#todo-list');
 const todoInput = document.querySelector('#content');
 const todoCategory = document.querySelector('.cat');
-// Function to save new todo to local storage
+const editBtn = document.querySelector('.edit');// Function to save new todo to local storage
 const saveLocalTodos = (el) => {
     // Setting todos to localstorage data or empty array
     if(localStorage.getItem('todos') == null) {
@@ -65,21 +65,21 @@ const displayTodos = () => {
         if(todo.done){
             todoItem.classList.add('done')
         }
-        // input.addEventListener('click', (e) => {
-        //     todo.done = e.target.checked;
-        //     localStorage.setItem('todos', JSON.stringify(todos));
-        //     if(todo.done) {
-        //         todoItem.classList.add('done');
-        //     } else {
-        //         todoItem.classList.remove('done');
-        //     }
-        //     displayTodos();
-        // });
+        input.addEventListener('click', (e) => {
+            todo.done = e.target.checked;
+            localStorage.setItem('todos', JSON.stringify(todos));
+            if(todo.done) {
+                todoItem.classList.add('done');
+            } else {
+                todoItem.classList.remove('done');
+            }
+        });
 
     });
 };
 // Loading todos from localstorage and setting username
 window.addEventListener('DOMContentLoaded', () => {
+    const deleteBtn = document.querySelector('.delete')
     // Setting username to localstorage data or empty string
     const username = localStorage.getItem('username') || '';
     let todos;
@@ -94,6 +94,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // Setting nameinput to username
     nameInput.value = username;
+    deleteBtn.addEventListener('click', (e) => {
+        todos = todos.filter(t => t != todo);
+        localStorage.setItem('todos', JSON.stringify(todos));
+    })
     displayTodos();
 });
 // Eventlistener to change username with input
@@ -102,7 +106,7 @@ nameInput.addEventListener('change', (e) => {
 });
 // Eventlistener to add new todo to list
 newTodo.addEventListener('submit', (e) => {
-    e.preventDefault()
+    e.preventDefault();
     // New todo
     // Getting values from name attr
     const todo = {
@@ -111,9 +115,11 @@ newTodo.addEventListener('submit', (e) => {
         done: false,
         createdAt: new Date().getTime()
     }
+    todos.push(todo);
+    localStorage.setItem('todos', JSON.stringify(todos))
     // Saving new todo to local storage
-    saveLocalTodos(todo);
-    let todos = JSON.parse(localStorage.getItem('todos'))
+    // saveLocalTodos(todo);
+    // let todos = JSON.parse(localStorage.getItem('todos'))
     todos.forEach(todo => {
 
         // Creating elements and adding classes
@@ -129,6 +135,18 @@ newTodo.addEventListener('submit', (e) => {
         content.innerHTML = `<input type='text' value='${todo.content}' readonly />`
         edit.innerHTML = 'Edit';
         deleteButton.innerHTML = 'Delete';
+        content.classList.add('todo-content');
+        actions.classList.add('actions');
+        edit.classList.add('edit');
+        deleteButton.classList.add('delete');
+        input.type = 'checkbox';
+        input.checked = todo.done;
+        span.classList.add('bubble');
+        if(todo.category == 'personal') {
+            span.classList.add('personal');
+        } else {
+            span.classList.add('business');
+        }
         label.appendChild(input);
         label.appendChild(span);
         actions.appendChild(edit)
@@ -138,4 +156,15 @@ newTodo.addEventListener('submit', (e) => {
         todoItem.appendChild(actions);
         todoList.appendChild(todoItem);
     })
+    e.target.reset();
+});
+editBtn.addEventListener('click', () => {
+    const input = document.querySelector('[dataset-todo-value]');
+    input.removeAttribute('readonly');
+    input.focus();
+    input.addEventListener('blur', (e) => {        
+        input.setAttribute('readonly');
+        console.log(e.target.value);
+        localStorage.setItem('todos', JSON.stringify(todos))
+    });
 });
