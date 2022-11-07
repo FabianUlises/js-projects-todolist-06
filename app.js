@@ -37,7 +37,7 @@ const displayTodos = () => {
         const actions = document.createElement('div');
         const edit = document.createElement('button');
         const deleteButton = document.createElement('button');
-        // content.classlist.add('todo-content');
+        content.classlist.add('todo-content');
         // actions.classlist.add('actions');
         // edit.classlist.add('edit');
         // deleteButton.classlist.add('delete');
@@ -61,19 +61,19 @@ const displayTodos = () => {
         todoItem.appendChild(content);
         todoItem.appendChild(actions);
         todoList.appendChild(todoItem);
-        // if(todo.done){
-        //     todo.classlist.add('done')
-        // }
-        // input.addEventListener('click', (e) => {
-        //     todo.done = e.target.checked;
-        //     localStorage.setItem('todos', JSON.stringify(todos));
-        //     if(todo.done) {
-        //         todoItem.classlist.add('done');
-        //     } else {
-        //         todoItem.classList.remove('done');
-        //     }
-        //     displayTodos();
-        // });
+        if(todo.done){
+            todo.classlist.add('done')
+        }
+        input.addEventListener('click', (e) => {
+            todo.done = e.target.checked;
+            localStorage.setItem('todos', JSON.stringify(todos));
+            if(todo.done) {
+                todoItem.classlist.add('done');
+            } else {
+                todoItem.classList.remove('done');
+            }
+            displayTodos();
+        });
 
     });
 };
