@@ -62,10 +62,11 @@ section {
     box-shadow: darkgreen;
     margin-bottom: 1rem;
     border-radius: 8px;
-}
+    }
 .create-todo .options {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 40px 1fr;
     grid-gap: 1rem;
     margin-bottom: 1.5rem;
 }
@@ -79,6 +80,13 @@ section {
     border-radius: 0.5rem;
     box-shadow: 8px 8px 8px rgba(128, 128, 128, 0.415);
 }
+.options > h4:nth-child(1) {
+    grid-column: span 2;
+    font-size: 1.5rem;
+    align-self: center;
+    justify-self: center;
+}
+   
 input[type='radio'],
 input[type='checkbox'] {
     display: none;
