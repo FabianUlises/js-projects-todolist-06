@@ -1,0 +1,63 @@
+:root {
+    --background-clr: #ff6347;
+    --font-drk-clr: #435058;
+    --font-ligt-clr:#E7D8C9;
+
+
+}
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+body {
+    background-color: tomato;
+    color: rgb(37, 37, 37);
+    padding: 1rem 0;
+}
+input:not([type='radio']):not([type='checkbox']), button {
+    appearance: none;
+    -webkit-appearance: none;
+    border: none;
+    outline: none;
+    background: none;
+    cursor: initial;
+}
+section {
+    margin-bottom: 2rem;
+    padding: 0 1.5rem;
+}
+.page-title {
+    font-size: 3rem;
+    font-weight: lighter;
+    display: flex;
+}
+.page-title input {
+    flex: 1 1 0%;
+    margin-left: 0.5rem;
+    min-width: 0;
+    font-size: 1.5rem;
+}
+.title{
+    color: var(--font-drk-clr);
+    font-size: 2.5rem;
+    font-weight: lighter;
+    margin-bottom: 1rem;
+}
+#new-todo-form label {
+    display: block;
+    margin-bottom: .4rem;
+    
+}
+#new-todo-form input[type='text'] {
+    display: block;
+    width: 100%;
+    padding: 1rem 1.5rem;
+    font-size: 1.125rem;
+    background-color: white;
+    box-shadow: darkgreen;
+    margin-bottom: 1rem;
+}

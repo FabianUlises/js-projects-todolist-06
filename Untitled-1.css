@@ -1,0 +1,27 @@
+
+/* main.css | http://127.0.0.1:8080/main.css */
+
+body {
+  /* 9: ; */
+  /* grid-template-rows: 304px 537px; */
+  height: 100vh;
+  grid-template-columns: 1fr minmax(250px, 500px) minmax(250px, 500px) 1fr;
+  \39: ;
+  grid-template-rows: 1fr 1fr;
+}
+
+/* Element | http://127.0.0.1:8080/?content=&category=personal */
+
+.app {
+  background: rebeccapurple;
+  grid: ;
+  grid-column: 2/4;
+}
+
+/* Element | http://127.0.0.1:8080/?content=&category=personal */
+
+.greeting {
+  /* margin: 0 auto; */
+  /* display: flex; */
+  align-self: center;
+}
