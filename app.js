@@ -4,7 +4,6 @@ const newTodo = document.querySelector('#new-todo-form');
 const todoList = document.querySelector('#todo-list');
 const todoInput = document.querySelector('#content');
 const todoCategory = document.querySelector('.cat');
-const editBtn = document.querySelector('.edit');// Function to save new todo to local storage
 const saveLocalTodos = (el) => {
     // Setting todos to localstorage data or empty array
     if(localStorage.getItem('todos') == null) {
@@ -51,7 +50,7 @@ const displayTodos = () => {
             span.classList.add('business');
         }
 
-        content.innerHTML = `<input type='text' value='${todo.content}' readonly />`
+        content.innerHTML = `<input type='text' value='${todo.content}' readonly dataset-todo-value/>`
         edit.innerHTML = 'Edit';
         deleteButton.innerHTML = 'Delete';
         label.appendChild(input);
@@ -62,6 +61,22 @@ const displayTodos = () => {
         todoItem.appendChild(content);
         todoItem.appendChild(actions);
         todoList.appendChild(todoItem);
+        edit.addEventListener('click', () => {
+            const userInput = document.querySelector('[dataset-todo-value]');
+            userInput.removeAttribute('readonly');
+            userInput.focus();
+            userInput.addEventListener('blur', (e) => {        
+                userInput.setAttribute('readonly', true);
+                console.log(e.target.value);
+                localStorage.setItem('todos', JSON.stringify(todos))
+            });
+        });
+        deleteButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            todos = todos.filter(t => t != todo);
+            localStorage.setItem('todos', JSON.stringify(todos));
+            displayTodos();
+        })
         if(todo.done){
             todoItem.classList.add('done')
         }
@@ -94,10 +109,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // Setting nameinput to username
     nameInput.value = username;
-    deleteBtn.addEventListener('click', (e) => {
-        todos = todos.filter(t => t != todo);
-        localStorage.setItem('todos', JSON.stringify(todos));
-    })
+
     displayTodos();
 });
 // Eventlistener to change username with input
@@ -157,14 +169,4 @@ newTodo.addEventListener('submit', (e) => {
         todoList.appendChild(todoItem);
     })
     e.target.reset();
-});
-editBtn.addEventListener('click', () => {
-    const input = document.querySelector('[dataset-todo-value]');
-    input.removeAttribute('readonly');
-    input.focus();
-    input.addEventListener('blur', (e) => {        
-        input.setAttribute('readonly');
-        console.log(e.target.value);
-        localStorage.setItem('todos', JSON.stringify(todos))
-    });
 });
