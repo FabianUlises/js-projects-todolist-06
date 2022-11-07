@@ -1,6 +1,6 @@
 // Selecting elements from dom
 const nameInput = document.querySelector('#userName');
-const newTodoBtn = document.querySelector('#add-new-todo');
+const newTodo = document.querySelector('#new-todo-form');
 const todoList = document.querySelector('#todo-list');
 const todoInput = document.querySelector('#content');
 const todoCategory = document.querySelector('.cat');
@@ -27,6 +27,7 @@ const displayTodos = () => {
     }
     // Creating dom elements for each todo
     todos.forEach(todo => {
+        console.log(todo)
         // Creating elements and adding classes
         const todoItem = document.createElement('div');
         todoItem.classList.add('todo-item');
@@ -37,24 +38,24 @@ const displayTodos = () => {
         const actions = document.createElement('div');
         const edit = document.createElement('button');
         const deleteButton = document.createElement('button');
-        content.classlist.add('todo-content');
-        // actions.classlist.add('actions');
-        // edit.classlist.add('edit');
-        // deleteButton.classlist.add('delete');
-        // input.type = 'checkbox';
-        // input.checked = todo.done;
-        // span.classlist.add('bubble');
-        // if(todo.category == 'personal') {
-        //     span.classList.add('personal');
-        // } else {
-        //     span.classList.add('business');
-        // }
+        content.classList.add('todo-content');
+        actions.classList.add('actions');
+        edit.classList.add('edit');
+        deleteButton.classList.add('delete');
+        input.type = 'checkbox';
+        input.checked = todo.done;
+        span.classList.add('bubble');
+        if(todo.category == 'personal') {
+            span.classList.add('personal');
+        } else {
+            span.classList.add('business');
+        }
 
         content.innerHTML = `<input type='text' value='${todo.content}' readonly />`
         edit.innerHTML = 'Edit';
         deleteButton.innerHTML = 'Delete';
         label.appendChild(input);
-        // label.appendChild(span);
+        label.appendChild(span);
         actions.appendChild(edit)
         actions.appendChild(deleteButton);
         todoItem.appendChild(label);
@@ -62,18 +63,18 @@ const displayTodos = () => {
         todoItem.appendChild(actions);
         todoList.appendChild(todoItem);
         if(todo.done){
-            todo.classlist.add('done')
+            todoItem.classList.add('done')
         }
-        input.addEventListener('click', (e) => {
-            todo.done = e.target.checked;
-            localStorage.setItem('todos', JSON.stringify(todos));
-            if(todo.done) {
-                todoItem.classlist.add('done');
-            } else {
-                todoItem.classList.remove('done');
-            }
-            displayTodos();
-        });
+        // input.addEventListener('click', (e) => {
+        //     todo.done = e.target.checked;
+        //     localStorage.setItem('todos', JSON.stringify(todos));
+        //     if(todo.done) {
+        //         todoItem.classList.add('done');
+        //     } else {
+        //         todoItem.classList.remove('done');
+        //     }
+        //     displayTodos();
+        // });
 
     });
 };
@@ -100,12 +101,13 @@ nameInput.addEventListener('change', (e) => {
     localStorage.setItem('username', e.target.value);
 });
 // Eventlistener to add new todo to list
-newTodoBtn.addEventListener('click', () => {
+newTodo.addEventListener('submit', (e) => {
+    e.preventDefault()
     // New todo
     // Getting values from name attr
     const todo = {
-        content: todoInput.value,
-        category: todoCategory.value,
+        content: e.target.elements.content.value,
+        category: e.target.elements.category.value,
         done: false,
         createdAt: new Date().getTime()
     }
@@ -113,6 +115,7 @@ newTodoBtn.addEventListener('click', () => {
     saveLocalTodos(todo);
     let todos = JSON.parse(localStorage.getItem('todos'))
     todos.forEach(todo => {
+
         // Creating elements and adding classes
         const todoItem = document.createElement('div');
         todoItem.classList.add('todo-item');
@@ -127,7 +130,7 @@ newTodoBtn.addEventListener('click', () => {
         edit.innerHTML = 'Edit';
         deleteButton.innerHTML = 'Delete';
         label.appendChild(input);
-        // label.appendChild(span);
+        label.appendChild(span);
         actions.appendChild(edit)
         actions.appendChild(deleteButton);
         todoItem.appendChild(label);
@@ -135,7 +138,4 @@ newTodoBtn.addEventListener('click', () => {
         todoItem.appendChild(actions);
         todoList.appendChild(todoItem);
     })
-    
-    // Resetting input
-    e.target.reset();
 });
