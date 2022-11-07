@@ -203,3 +203,6 @@ input:checked ~ .bubble::after {
     margin-right: 0.5rem;
     background-color: #34b1ffa5;
 }
+.edit {
+    color: red;
+}
